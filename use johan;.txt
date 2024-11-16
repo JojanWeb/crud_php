@@ -1,0 +1,60 @@
+use johan;
+
+drop table if exists usuarios, generos, ciudades, lenguajes, usuarios_lenguajes;
+
+drop table lenguajes;
+
+create table usuarios(
+id int auto_increment,
+nombre varchar(255),
+apellido varchar(255),
+correo varchar(255),
+fecha_nacimiento DATE,
+id_genero INT,
+id_ciudad int,
+primary key(id),
+FOREIGN KEY (id_genero) REFERENCES generos(id),
+FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
+);
+
+create table generos(
+id int auto_increment,
+nombre varchar(255),
+primary key(id)
+);
+
+create table ciudades(
+id int auto_increment,
+nombre varchar(255),
+primary key(id)
+);
+
+create table lenguajes(
+id int auto_increment primary key,
+nombre varchar(255)
+);
+
+create table lenguajes_usuarios(
+id_aprendiz int,
+id_lenguaje int,
+FOREIGN KEY (id_aprendiz) REFERENCES usuarios(id),
+FOREIGN KEY (id_lenguaje) REFERENCES lenguajes(id)
+);
+
+
+insert into ciudades (nombre) values
+('Girón'), ('Piedecuesta'),('Bucaramanga'),('Lebrija'),('Floridablanca');
+
+insert into generos (nombre) values ('Masculino'),('Femenino'),('Otros');
+
+insert into generos (nombre) values ('No binario');
+
+insert into lenguajes (nombre) values ('JAVA'),('.NET'),('SQL'),('JavaScript'),('PHP'),('PYTHON');
+
+insert into usuarios (nombre,apellido,correo,fecha_nacimiento,id_genero,id_ciudad) values
+('Johan','Delgado','zzaibor69@gmail.com','2007-01-24','1','1');
+
+select * from usuarios;
+
+DELETE FROM usuarios
+WHERE nombre='sdadsa';
