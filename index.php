@@ -15,11 +15,18 @@ $bandera->execute();
 $ciudades = $bandera->fetchAll();
 
 
-$sqlGenero = "SELECT * FROM generos";
+$sql = "SELECT * FROM generos";
 
-$banderaG = $conexion->prepare($sqlGenero);
-$banderaG->execute();
-$generos = $banderaG->fetchAll();
+$bandera = $conexion->prepare($sql);
+$bandera->execute();
+$generos = $bandera->fetchAll();
+
+$sql = "SELECT * FROM lenguajes";
+
+$bandera = $conexion->prepare($sql);
+$bandera->execute();
+$lenguajes = $bandera->fetchAll();
+
 ?>
 
 <head>
@@ -47,9 +54,13 @@ $generos = $banderaG->fetchAll();
         .contenedor__label{
             margin-top: 10px;
         }
+
+        .formulario-contenedor{
+            background-color: #0f0;
+        }
     </style>
 </head>
-<div>
+<div class="formulario-contenedor">
     <h1> FORMULARIO</h1>
     <form action="envio.php">
         <div class="contenedor__label">
@@ -78,7 +89,7 @@ $generos = $banderaG->fetchAll();
                 <?php 
                     foreach ($ciudades as $key => $value) {
                         echo $value;
-                ?>      <option value="<?= $value['id'] ?>">
+                ?>      <option value="<?= $value['id'] ?>" value="<?= $value['id'] ?>">
                             <?= $value['nombre'] ?>
                         </option>
                 <?php
@@ -96,7 +107,26 @@ $generos = $banderaG->fetchAll();
                         <label for="<?= $value['id'] ?>" class="genero__label">
                             <?= $value['nombre'] ?>
                         </label>
-                        <input type="radio" id="<?= $value['id'] ?>" name="genero" class="genero__input">
+                        <input type="radio" id="<?= $value['id'] ?>" value="<?= $value['id'] ?>" name="genero" class="genero__input">
+                    </div>
+                    
+            <?php
+                }
+            ?>
+            </div>
+        </div>
+
+        <div class="lenguajes-contenedor">
+            <p>Seleccione sus lenguajes:</p>
+            <div class="lenguajes">
+            <?php 
+                foreach ($lenguajes as $key => $value) {
+            ?>
+                    <div class="">
+                        <label for="<?= $value['id'] ?>" class="genero__label">
+                            <?= $value['nombre'] ?>
+                        </label>
+                        <input type="checkbox" id="<?= $value['id'] ?>" value="<?= $value['id'] ?>" name="lenguaje[]">
                     </div>
                     
             <?php
