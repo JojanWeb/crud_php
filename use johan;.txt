@@ -1,3 +1,9 @@
+create database johan;
+
+CREATE USER 'johan_delgado'@'localhost' IDENTIFIED BY 'Wasm_123456789';
+
+GRANT ALL PRIVILEGES ON johan. * TO 'johan_delgado'@'localhost';
+
 use johan;
 
 drop table if exists usuarios, generos, ciudades, lenguajes, usuarios_lenguajes;
