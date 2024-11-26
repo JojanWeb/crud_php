@@ -63,4 +63,13 @@ insert into usuarios (nombre,apellido,correo,fecha_nacimiento,id_genero,id_ciuda
 select * from usuarios;
 
 DELETE FROM usuarios
-WHERE nombre='sdadsa';
+WHERE id > 4;
+
+DELETE FROM lenguajes_usuarios
+WHERE id_aprendiz > 4;
+
+describe usuarios;
+
+select * from lenguajes_usuarios;
+
+ALTER TABLE usuarios auto_increment = 4;
