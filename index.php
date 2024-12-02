@@ -65,27 +65,27 @@ $lenguajes = $bandera->fetchAll();
     <form action="envio.php">
         <div class="contenedor__label">
             <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre">
+            <input type="text" id="nombre" name="nombre" require>
         </div>
 
         <div class="contenedor__label">
             <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" name="apellido">
+            <input type="text" id="apellido" name="apellido" require>
         </div>
 
         <div class="contenedor__label">
             <label for="correo">Correo</label>
-            <input type="text" id="correo" name="correo">
+            <input type="text" id="correo" name="correo" require>
         </div>
 
         <div class="contenedor__label">
             <label for="fecha">Fecha de nacimiento</label>
-            <input type="date" id="fecha" name="fecha">
+            <input type="date" id="fecha" name="fecha" require>
         </div>
 
         <div class="contenedor__label">
             <label for="ciudad_id">Ciudad: </label>
-            <select name="ciudad_id" id="ciudad_id" name="ciudad">
+            <select name="ciudad_id" id="ciudad_id" name="ciudad" require>
                 <?php 
                     foreach ($ciudades as $key => $value) {
                         echo $value;

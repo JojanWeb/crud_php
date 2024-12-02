@@ -1,19 +1,22 @@
-<?php 
-
+<?php
 require('conexion.php');
 
 $db = new Conexion();
 $conexion = $db->getConexion();
 
+echo "<pre>";
+print_r($_REQUEST);
+echo "<pre>";
+
+$id = $_REQUEST['id_usuario'];
 $nombre = $_REQUEST['nombre'];
 $apellido = $_REQUEST['apellido'];
 $correo = $_REQUEST['correo'];
 $fecha = $_REQUEST['fecha'];
 $genero = $_REQUEST['genero'];
 $ciudad = $_REQUEST['ciudad_id'];
-
 $lenguajes = $_REQUEST['lenguaje'];
-$id = $_REQUEST['id'];
+
 
 $sql = "UPDATE usuarios SET 
 nombre = :nombre,
@@ -34,7 +37,7 @@ $stm->bindParam(":fecha_nacimiento",$fecha);
 $stm->bindParam(":id_genero",$genero);
 $stm->bindParam(":id_ciudad",$ciudad);
 $stm->bindParam(":id",$id);
-$usuarios = $stm->execute();
+$stm->execute();
 
 foreach ($lenguajes as $key => $value) {
     $sql = "UPDATE lenguajes_usuarios SET
@@ -43,8 +46,10 @@ foreach ($lenguajes as $key => $value) {
 
     $stm = $conexion->prepare($sql);
     $stm->bindParam(":id_lenguaje",$value);
-    $usuarios = $stm->execute();
+    $stm->execute();
 }
 
-require('usuarios.php');
-?>
+$mensaje = "ACTUALIZADO EXITOSAMENTE";
+// echo '<script language="javascript">alert("ACTUALIZADO EXITOSAMENTE");</script>';
+
+header("Location: usuarios.php?mensaje=" . urlencode($mensaje));

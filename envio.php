@@ -3,6 +3,8 @@
 $conexion = "";
 $db = "";
 
+header('Location: index.php');
+
 echo "<pre>";
 print_r($_REQUEST);
 echo "</pre>";
@@ -69,4 +71,4 @@ foreach ($lenguajes as $key => $value) {
     </tr>
 </table>
 
-<?= include('usuarios.php');
+<?= header('Location: usuarios.php');
