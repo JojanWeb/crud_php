@@ -22,5 +22,5 @@ $stm->execute();
 // echo '<script language="javascript">alert("ELIMINADO EXITOSAMENTE");</script>';
 $mensaje = "ELIMINADO EXITOSAMENTE";
 
-header("Location: usuarios.php?mensaje=" . urlencode($mensaje));
+header("Location: usuarios.php?mensaje=" . $mensaje);
 ?>

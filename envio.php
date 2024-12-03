@@ -15,12 +15,31 @@ require('conexion.php');
 $db = new Conexion();
 $conexion = $db->getConexion();
 
-$nombre = $_REQUEST['nombre'];
-$apellido = $_REQUEST['apellido'];
-$correo = $_REQUEST['correo'];
-$fecha = $_REQUEST['fecha'];
-$genero = $_REQUEST['genero'];
-$ciudad = $_REQUEST['ciudad_id'];
+function validarDatos() {
+  if (isset($_REQUEST)) {
+    
+  }
+}
+
+function validarNombre($nombre) {
+  return preg_match("/^[A-Z-a-z ]$/", $nombre);
+}
+
+function FunctionName() {
+  
+}
+
+function FunctionName() {
+  
+}
+
+function FunctionName() {
+  
+}
+
+function FunctionName() {
+  
+}
 
 $lenguajes = $_REQUEST['lenguaje'];
 
