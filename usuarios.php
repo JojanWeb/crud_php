@@ -40,13 +40,14 @@ $usuarios = $bandera->fetchAll();
 
 
 try {
-  $mensaje = "";
-  $mensaje = $_REQUEST['mensaje'];
-  if ($mensaje === 'ELIMINADO EXITOSAMENTE') {
-    echo "<script language='javascript'>alert('$mensaje');</script>";
-  }
-  if ($mensaje === 'ACTUALIZADO EXITOSAMENTE') {
-    echo "<script language='javascript'>alert('$mensaje');</script>";
+  if (isset($_REQUEST['mensaje'])) {
+      $mensaje = $_REQUEST['mensaje'];
+      if ($mensaje === 'ELIMINADO EXITOSAMENTE') {
+        echo "<script language='javascript'>alert('$mensaje');</script>";
+      }
+      if ($mensaje === 'ACTUALIZADO EXITOSAMENTE') {
+        echo "<script language='javascript'>alert('$mensaje');</script>";
+      } 
   }
 } catch (Exception $e) {
   
