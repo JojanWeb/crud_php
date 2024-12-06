@@ -1,107 +1,55 @@
 <?php 
 
+session_start();
+
+require('conexion.php');
+include('funciones.php');
+
 $conexion = "";
 $db = "";
 
-// header('Location: index.php');
+$db = new Conexion();
+$conexion = $db->getConexion();
+
+$nombre = $_REQUEST['nombre'] ?? null;
+$apellido = $_REQUEST['apellido'] ?? null;
+$correo = $_REQUEST['correo'] ?? null;
+$fecha = $_REQUEST['fecha'] ?? null;
+$genero = $_REQUEST['genero'] ?? null;
+$ciudad = $_REQUEST['ciudad_id'] ?? null;
+$lenguajes = $_REQUEST['lenguaje'] ?? [];
 
 echo "<pre>";
 print_r($_REQUEST);
 echo "</pre>";
 
-
-require('conexion.php');
-
-$db = new Conexion();
-$conexion = $db->getConexion();
-
-function validarDatos() {
-  $errores = array();
-  if (isset($_REQUEST)) {
-    $nombre = $_REQUEST['nombre'];
-    if (!validarNombre($nombre)) {
-      array_push($errores, "EL CAMPO NOMBRE NO CUMPLE LOS REQUISITOS");
-    }
-
-    $apellido = $_REQUEST['apellido'];
-
-    if (!validarNombre($apellido)) {
-      array_push($errores, "EL CAMPO APELLIDO NO CUMPLE LOS REQUISITOS");
-    }
-
-    $correo = $_REQUEST['correo'];
-    if (!validarCorreo($correo)) {
-      array_push($errores, "EL CAMPO EMAIL NO CUMPLE CON LAS CONDICIONES NECESARIAS");
-    }
-
-    $fecha = $_REQUEST['fecha'];
-    if (!validarFecha($fecha)) {
-      array_push($errores, "LA FECHA DEBE SER COHERENTE");
-    }
-    
-    if (!validarGenero()) {
-      array_push($errores, "DEBE SELECCIONAR UN GENERO");
-    }
-
-    return $errores;
-  }
-}
-
-function validarNombre($nombre) {
-  echo preg_match("/^[A-Z]/", $nombre);
-  echo "<br>";
-  return preg_match("/^[A-Z]/", $nombre);
-}
-
-function validarCorreo($correo) {
-  return filter_var($correo, FILTER_VALIDATE_EMAIL);
-}
-
-function validarFecha($fecha) {
-  echo $fecha;
-  return preg_match("/^[\d]{4}-[\d]{2}-[\d]{2}$/", $fecha);
-  
-}
-
-function validarGenero() {
-  if (isset($_REQUEST['genero'])) {
-    return true;
-  }
-  return false;
-}
-
-function validarLenguajes() {
-  if (isset($_REQUEST['lenguaje'])) {
-    $lenguajes = $_REQUEST['lenguaje'];
-    return $lenguajes;
-  }
-  return false;
-}
-
-
 // $lenguajes = $_REQUEST['lenguaje'];
 
-$errores = validarDatos();
+$errores = validarDatos($nombre, $apellido, $correo, $fecha, $genero);
 
-echo "ERRORES:".empty($errores);
-echo "<br>";
+if (empty($errores)) {
+  $sql = "INSERT INTO usuarios (nombre, apellido, correo, fecha_nacimiento, id_genero, id_ciudad) 
+          VALUES (:nombre, :apellido, :correo, :fecha_nacimiento, :id_genero, :id_ciudad)";
 
-if (!empty($errores)) {
-  $sql = "INSERT INTO usuarios (nombre,apellido,correo,fecha_nacimiento,id_genero,id_ciudad) values
-  (:nombre,:apellido,:correo,:fecha_nacimiento,:id_genero,:id_ciudad)";
+  echo "CIUDAD: ".$ciudad;
   
   $stm = $conexion->prepare($sql);
-  
-  $stm->bindParam(":nombre",$nombre);
-  $stm->bindParam(":apellido",$apellido);
-  $stm->bindParam(":correo",$correo);
-  $stm->bindParam(":fecha_nacimiento",$fecha);
-  $stm->bindParam(":id_genero",$genero);
-  $stm->bindParam(":id_ciudad",$ciudad);
+  $stm->bindParam(":nombre", $nombre);
+  $stm->bindParam(":apellido", $apellido);
+  $stm->bindParam(":correo", $correo);
+  $stm->bindParam(":fecha_nacimiento", $fecha);
+  $stm->bindParam(":id_genero", $genero);
+  $stm->bindParam(":id_ciudad", $ciudad);
+
   $usuarios = $stm->execute();
+}else{
+  $_SESSION['flash_errors'] = $errores;
+  $_SESSION['flash_datos'] = $_REQUEST;
+  header('Location: index.php');
+  exit;
 }
 
-$lenguajes = validarLenguajes();
+// print_r($lenguajes);
 if (empty($errores) && $lenguajes) {
   $ultimo_id = $conexion->lastInsertId();
   
@@ -118,4 +66,4 @@ if (empty($errores) && $lenguajes) {
 }
 
 print_r($errores);
-// header('Location: usuarios.php');
+header('Location: usuarios.php');
