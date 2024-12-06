@@ -19,9 +19,9 @@ function validarDatos($nombre, $apellido, $correo, $fecha, $genero) {
 }
 
 function validarNombre($nombre) {
-  echo preg_match("/^[A-Za-z]/", $nombre);
+  echo preg_match("/^[A-Za-z]$/", $nombre);
   echo "<br>";
-  return preg_match("/^[A-Za-z]/", $nombre);
+  return preg_match("/^[A-Za-z]$/", $nombre);
 }
 
 function validarCorreo($correo) {
